@@ -1,4 +1,4 @@
-```{.python} 
+~~~python
 
 sc
 myrdd=sc.textFile("file:/home/training/training_materials/data/frostroad.txt")
@@ -16,8 +16,9 @@ ipsRDD.take(5)
 for ip in ipsRDD.take(1): print ip
 for ip in ipsRDD.take(10): print ip
 ipsRDD.saveAsTextFile("/loudacre/iplist")
-```
+~~~
 
+~~~
     1  hdfs dfs -mkdir /loudacre
     2  hdfs dfs -ls
     3  hdfs dfs -put ~/training_materials/data/weblogs/ /loudacre/
@@ -26,3 +27,4 @@ ipsRDD.saveAsTextFile("/loudacre/iplist")
     6  hdfs dfs -cat /loudacre/iplist/*
     7  hdfs dfs -ls /loudacre/iplist
     8  hdfs dfs -ls /loudacre/iplist/part-00181
+~~~
