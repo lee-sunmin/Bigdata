@@ -1,4 +1,4 @@
-```{.python} 
+~~~python
 
 sc.version
 
@@ -33,4 +33,4 @@ myrdd2.take(5)
 
 myrdd2.saveAsTextFile("/loudacre/account-models")
 
-```
+~~~
