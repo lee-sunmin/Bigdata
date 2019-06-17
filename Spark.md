@@ -5,7 +5,7 @@ map reduce program 의 단점 : 코딩이 복잡하다
 
 map reduce의 장점 중 하나는 큰 데이터도 처리 할 수 있음
 
-mapreduce 3 가지
+mapreduce 3 가지  
 1] map - 데이터 분산, 각 mapper들이 자기 데이터 읽어 온 다음에 그 데이터만 가지고 처리(각각 분리된 데이터르 를 가지고 연산, key-value)  
 2] shuffle sort - 전체 key를 같은 곳으로 모아지게 한 다음에(key 로 sorting)  
 3] reduce -  같은 key가진애끼리 쪼개서 처리  
