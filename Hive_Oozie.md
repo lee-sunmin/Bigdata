@@ -1,13 +1,35 @@
-Cluster? 같은 일을 할 수 있도록 여러개 Node들을 합쳐놓은 것
-Service? 다양한 부서
-Role? 
-Role Group?
-Instance?
+### Intro
+
+HDFS? 
+범용 하드웨어로 구성된 클러스터에서 실행되고 스트리밍 방식의 데이터 접근 패턴으로 대용량 파일을 다룰 수 있도록 설계된 시스템  
+HDFS 블록 크기의 기본 값은 128MB
+
+Cluster? 같은 일을 할 수 있도록 여러개 Node들을 합쳐놓은 것  
+Service? 다양한 부서  
+Role?  
+Role Group?  
+Instance?  
 
 Cluster 안에 Rack들로 구성
 
 HDFS 의 Name Node/ Data Node/ 2Name Node 가 Role
         Role Group은 Data Node Group ,... - Group에 있는 애들은 같은 Config를 적용시킬 수 있음 -> 관리 용이
+
+Name Node : 파일시스템 트리와 그 트리에 포함된 모든 파일과 디렉터리에 대한 메타데이터 유지  
+            파일 시스템의 네임스페이스 관리  
+            fsimage와 edits를 로컬 디스크에 영속적 저장  
+            파일에 속한 모든 블록이 어느 데이터 노드에 있는지 파악  
+            시스템이 시작할 때 모든 데이터노드로부터 받아서 재구성  
+
+Data Node : 파일시스템의 실질적 일꾼  
+            클라이언트나 네임노드의 요청이 있을 때 블록을 저장하고 탐색하며,  
+            저장하고 있는 블록의 목록을 주기적으로 네임노드에 보고  
+            
+어플리케이션 : 맵리듀스, 스파크, 테즈 등
+계산 : yarn
+저장 : HDFS, HBase
+
+===================================================
 
 HDFS : 데이터 저장
 YARN : 스케쥴링, 리소스 관리
@@ -139,6 +161,8 @@ order 먼저 하고 limit 쓰면 오름차순/내림차순 상위 몇개 추출 
 
 
 #### Hive
+: 하둡 기반의 데이터 웨어하우징 프레임워크
+대량의 데이터를 관리하고 학습하기 위하여 개발되었음
 
 facebook
 dbms는 아니지만, standard SQL과 유사
