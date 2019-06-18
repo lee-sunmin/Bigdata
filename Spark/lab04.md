@@ -20,7 +20,7 @@ if __name__ == "__main__":
 ~~~
 
 
-   95  vi CountJPGs.py 
-   96  spark-submit CountJPGs.py /loudacre/weblogs/*
-   97  spark-submit --master yarn-client CountJPGs.py /loudacre/weblogs/*
+   95  vi CountJPGs.py  
+   96  spark-submit CountJPGs.py /loudacre/weblogs/*  
+   97  spark-submit --master yarn-client CountJPGs.py /loudacre/weblogs/*  
    -> Cluster
