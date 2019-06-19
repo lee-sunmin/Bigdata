@@ -68,7 +68,8 @@ if __name__ == "__main__":
     userreqs = mystream \
     .filter(lambda line: "KBDOC" in line)
 
-    userreqs.pprint()
+    userreqs.pprint(5)
+    userreqs.foreachRDD(lambda t,r :printRDDcount(r))
 
     userreqs.saveAsTextFiles("/loudacre/streamlog/kblogs")
 
