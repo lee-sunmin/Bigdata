@@ -40,7 +40,39 @@ RDD A -> RDD B ( RDD들은 Immutable 하다. 기존 RDD 그대로 두고 새로�
 2] Actions
 결과 값이 나오는 연산자들
 
-.. 나머지 내용은 책에 정리하였음
+.. 나머지 내용은 책에 정리했음
+
+
+
+### Apache Spark Streaming - Processing Multiple Batches
+
+Slice : collection of batches
+State : 
+Windows : 
+
+Time Slicing
+DStream.slice(fromTime, toTime)
+StreamingContext.remember(duration) 을 써줘야 함 ~ 데이터 버리지 말고 갖고있어!
+=> state 유지 위해 뒤에서 계속 작업 해 줘야 함
+
+ssc.checkpoint("checkpoints") < Set checkpoint directory(HDFS)
+=> infinite lineages 방지 위해 사용
+=> persist 와는 개념이 다름, lineage를 delete
+
+updateStateByKey(lambda newCounts, state : updateCount ..
+
+Sliding Window Operaions
+reduceByKeyAndWindow(fn,Seconds(12),Seconds(4))
+2번째 인자 : 한번 찍는 창의 범위(창의 길이)
+3번째 인자 : 사진 찍는 간격(창의 간격)
+
+reduceByKeyAndWindow(lambda v1,v2: v1+v2,5*60,30)
+5분어치 데이터 30초마다 찍기
+
+
+
+
+
 
 
 
