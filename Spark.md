@@ -46,29 +46,65 @@ RDD A -> RDD B ( RDD들은 Immutable 하다. 기존 RDD 그대로 두고 새로�
 
 ### Apache Spark Streaming - Processing Multiple Batches
 
-Slice : collection of batches
-State : 
-Windows : 
+Slice : collection of batches  
+State :  
+Windows :   
 
-Time Slicing
-DStream.slice(fromTime, toTime)
-StreamingContext.remember(duration) 을 써줘야 함 ~ 데이터 버리지 말고 갖고있어!
+Time Slicing  
+DStream.slice(fromTime, toTime)  
+StreamingContext.remember(duration) 을 써줘야 함 ~ 데이터 버리지 말고 갖고있어!  
 => state 유지 위해 뒤에서 계속 작업 해 줘야 함
 
-ssc.checkpoint("checkpoints") < Set checkpoint directory(HDFS)
-=> infinite lineages 방지 위해 사용
+ssc.checkpoint("checkpoints") < Set checkpoint directory(HDFS)  
+=> infinite lineages 방지 위해 사용  
 => persist 와는 개념이 다름, lineage를 delete
 
-updateStateByKey(lambda newCounts, state : updateCount ..
+updateStateByKey(lambda newCounts, state : updateCount ..  
 
-Sliding Window Operaions
-reduceByKeyAndWindow(fn,Seconds(12),Seconds(4))
-2번째 인자 : 한번 찍는 창의 범위(창의 길이)
+Sliding Window Operaions  
+reduceByKeyAndWindow(fn,Seconds(12),Seconds(4))  
+2번째 인자 : 한번 찍는 창의 범위(창의 길이)  
 3번째 인자 : 사진 찍는 간격(창의 간격)
 
-reduceByKeyAndWindow(lambda v1,v2: v1+v2,5*60,30)
+reduceByKeyAndWindow(lambda v1,v2: v1+v2,5*60,30)  
 5분어치 데이터 30초마다 찍기
 
+
+### Apache Spark Streaming : Data Sources
+:(
+
+spark.streaming.backpressure.enabled = true  
+
+*Flume  
+Push-based  
+(*)Pull-base
+
+*Kafka*  
+pdf 68pg
+Direct(receiverless) mode 가 있는데, 주로 이걸로 돌려야 함
+receiver mode -> partition마다 receiver가 뜸 :( -> union 해줘야 해서 약간 번거로움
+
+<direct mode> 70pg
+kafka 랑 direct로 묶여서 RDD가 1개 생김 -> union 해줄 필요 없음
+
+kafka 돌릴 때 broker들이 뜬다.
+
+### Common Patterns in Apache Spark Data Processing
+
+pageRank Algorithm
+
+def computeContribs
+
+*.85+.15 하는 이유?
+블랙홀 - 들어오는 경우만 있고, 나가는 경우가 없을 때 해결하기 위함
+
+* Checkpoint
+iterative program에서 해 줘야 함. 하지 않으면 stack overflow 발생
+
+checkpoint() 뒤에 action 넣어줘야 함  
+ex) myrdd.checkpoint()  
+    myrdd.count() <- action
+    
 
 
 
