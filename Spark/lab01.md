@@ -1,3 +1,5 @@
+Cloudera-Training-DevSH-5.7.0f-vmware
+
 ~~~python
 
 sc
