@@ -54,6 +54,58 @@ sudo yum install -y wget
 df -Th
 ~~~
 
+## Connect to SSH using password
 
+### Change/Setting account password
+~~~
+[hadoop@localhost ~]$ sudo passwd hadoop
 
+We trust you have received the usual lecture from the local System
+Administrator. It usually boils down to these three things:
+
+    #1) Respect the privacy of others.
+    #2) Think before you type.
+    #3) With great power comes great responsibility.
+
+[sudo] password for hadoop: 
+Changing password for user hadoop.
+New password: 
+Retype new password: 
+passwd: all authentication tokens updated successfully.
+[hadoop@localhost ~]$ 
+~~~
+
+### Update parameter
+https://aws.amazon.com/ko/premiumsupport/knowledge-center/ec2-password-login/
+
+~~~
+sudo vi /etc/ssh/sshd_config
+#Change "PasswordAuthentication -> yes"
+~~~
+
+### Restart SSH Service
+~~~
+# linux command
+[hadoop@localhost ~]$ sudo service sshd restart
+Redirecting to /bin/systemctl restart sshd.service
+~~~
+
+## Pre-qualification
+### Release SELinux
+https://www.lesstif.com/pages/viewpage.action?pageId=6979732
+~~~
+sudo vi /etc/sysconfig/selinux >> SELINUX=disabled
+reboot
+~~~
+
+### Hosts Setting
+~~~
+# Setting host name
+# m1은 변경하고자 하는 이름
+[hadoop@localhost ~]$ hostnamectl set-hostname m1
+[hadoop@localhost ~]$ hostname
+m1
+
+# n1, n2 에서도 동일한 작업 진행
+~~~
 
