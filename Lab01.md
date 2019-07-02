@@ -300,8 +300,7 @@ web : http://localhost:7180 접속
 ~~~
 
 ### cloudera 화면 확인
-![ex_screenshot](./img/web.png)
-
+<img width="869" alt="web" src="https://user-images.githubusercontent.com/17976251/60519474-966fcd80-9d1e-11e9-8fde-cdd59c1055a7.png">
 
 ---
 
