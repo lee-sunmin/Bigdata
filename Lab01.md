@@ -1,13 +1,9 @@
-#Cloudera 5.15.x
-
-* 3개의 노드 (virtual 환경) 생성
-3개 모두 ip를 다르게 하기 위하여 bridge 로 설정해야 한다!  
-그리고 설치 시에 network on!  
-~~*네트워크 설정 제대로 안했다가 삽질함*~~
+# Cloudera 5.15.x
 
 
 #### 참고 웹 사이트  
 https://victorydntmd.tistory.com/212?category=704005
+https://www.cloudera.com/documentation/enterprise/5-15-x/topics/configure_cm_repo.html
 
 ### check ip 
 hostname -I
@@ -45,6 +41,7 @@ cpe:/o:centos:centos:7
 ~~~
 
 ## 초기 셋팅
+
 ### SSH Server setting
 ~~~
 # SSH 서버가 실행되고 있는지 확인
