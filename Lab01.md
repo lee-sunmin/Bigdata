@@ -1,4 +1,4 @@
-
+#Cloudera 5.15.x
 
 * 3개의 노드 (virtual 환경) 생성
 3개 모두 ip를 다르게 하기 위하여 bridge 로 설정해야 한다!  
@@ -140,8 +140,97 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 #### update yum, install wget
 ~~~
 sudo yum update
+
+# Update 시에  Cannot find a valid baseurl for repo: base/7/x86_64 라는 에러 발생하면
+sudo dhclient
+
 sudo yum install -y wget
 ~~~
+
+
+## Cloudera
+
+### Download the cloudera-manager.repo file for your OS version to the /etc/yum.repos.d/ directory 
+~~~
+[sunmin@localhost ~]$ sudo wget https://archive.cloudera.com/cm5/redhat/7/x86_64/cm/cloudera-manager.repo -P /etc/yum.repos.d/
+
+--2019-07-02 19:50:19--  https://archive.cloudera.com/cm5/redhat/7/x86_64/cm/cloudera-manager.repo
+Resolving archive.cloudera.com (archive.cloudera.com)... 151.101.88.167
+Connecting to archive.cloudera.com (archive.cloudera.com)|151.101.88.167|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 290 [binary/octet-stream]
+Saving to: ‘/etc/yum.repos.d/cloudera-manager.repo’
+
+100%[======================================>] 290         --.-K/s   in 0s      
+
+2019-07-02 19:50:20 (31.5 MB/s) - ‘/etc/yum.repos.d/cloudera-manager.repo’ saved [290/290]
+~~~
+
+~~~
+[sunmin@localhost ~]$ sudo vi /etc/yum.repos.d/cloudera-manager.repo
+#modify baseurl => https://archive.cloudera.com/cm5/redhat/7/x86_64/cm/5.15.0/
+# url is 'Location' in Cloudera Manager Version and Download Information
+~~~
+
+### Import the repository signing GPG key
+~~*version 선택 기준?*~~
+~~~
+[sunmin@localhost ~]$ sudo rpm --import https://archive.cloudera.com/cm5/redhat/7/x86_64/cm/RPM-GPG-KEY-cloudera
+~~~
+
+
+### Installing the JDK Using Cloudera Manager
+*The JDK must be installed at /usr/java/jdk-version.*
+
+~~~
+# 5.15.x 기준
+[sunmin@localhost ~]$ sudo yum install oracle-j2sdk1.7
+~~~
+
+### Install the Cloudera Manager Server Packages
+~~~
+[sunmin@localhost ~]$ sudo yum install cloudera-manager-daemons cloudera-manager-server
+[sunmin@localhost ~]$ sudo yum install cloudera-manager-daemons cloudera-manager-agent
+~~~
+
+### Installing MariaDB Server
+~~~
+[sunmin@localhost ~]$ sudo yum install mariadb-server
+[sunmin@localhost lib]$ sudo systemctl enable mariadb
+Created symlink from /etc/systemd/system/multi-user.target.wants/mariadb.service to /usr/lib/systemd/system/mariadb.service.
+[sunmin@localhost ~]$ sudo systemctl start mariadb
+
+[sunmin@localhost ~]$ sudo /usr/bin/mysql_secure_installation
+Y>Y>N>Y>Y
+~~~
+
+*예외 처리*
+~~~
+systemctl status mariadb
+
+# mariadb 삭제
+[sunmin@localhost system]$  yum list installed mariadb\*
+[sunmin@localhost system]$ sudo yum remove -y mariadb-libs.x86_64 
+~~~
+
+### Installing the MySQL JDBC Driver for MariaDB
+~~~
+[sunmin@localhost ~]$ sudo wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.46.tar.gz
+[sunmin@localhost ~]$ tar zxvf mysql-connector-java-5.1.46.tar.gz
+
+[sunmin@localhost ~]$ sudo mkdir -p /usr/share/java/
+[sudo] password for sunmin: 
+[sunmin@localhost ~]$ cd mysql-connector-java-5.1.46
+[sunmin@localhost mysql-connector-java-5.1.46]$ sudo cp mysql-connector-java-5.1.46-bin.jar /usr/share/java/mysql-connector-java.jar
+~~~
+
+
+### Creating Databases for Cloudera Software
+~~~
+~~~
+
+
+
 
 
 ### Update parameter
@@ -169,4 +258,15 @@ m1
 
 # n1, n2 에서도 동일한 작업 진행
 ~~~
+
+
+
+
+
+
+
+etc.
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+
 
