@@ -227,11 +227,83 @@ systemctl status mariadb
 
 ### Creating Databases for Cloudera Software
 ~~~
+[sunmin@localhost ~]$ mysql -u root -p
+
+MariaDB [(none)]> create database scm default character set utf8 default collate utf8_general_ci;
+MariaDB [(none)]> grant all on scm.* to 'scm'@'%' identified by 'password';
+
+MariaDB [(none)]> create database amon default character set utf8 default collate utf8_general_ci;
+MariaDB [(none)]> grant all on amon.* to 'amon'@'%' identified by 'password';
+
+MariaDB [(none)]> create database rman default character set utf8 default collate utf8_general_ci;
+MariaDB [(none)]> grant all on rman.* to 'rman'@'%' identified by 'password';
+
+MariaDB [(none)]> create database hue default character set utf8 default collate utf8_general_ci;
+MariaDB [(none)]> grant all on hue.* to 'hue'@'%' identified by 'password';
+
+MariaDB [(none)]> create database metastore default character set utf8 default collate utf8_general_ci;
+MariaDB [(none)]> grant all on metastore.* to 'metastore'@'%' identified by 'password';
+
+MariaDB [(none)]> create database sentry default character set utf8 default collate utf8_general_ci;
+MariaDB [(none)]> grant all on sentry.* to 'sentry'@'%' identified by 'password';
+
+MariaDB [(none)]> create database nav default character set utf8 default collate utf8_general_ci;
+MariaDB [(none)]> grant all on nav.* to 'nav'@'%' identified by 'password';
+
+MariaDB [(none)]> create database navms default character set utf8 default collate utf8_general_ci;
+MariaDB [(none)]> grant all on navms.* to 'navms'@'%' identified by 'password';
+
+MariaDB [(none)]> create database oozie default character set utf8 default collate utf8_general_ci;
+MariaDB [(none)]> grant all on oozie.* to 'oozie'@'%' identified by 'password';
 ~~~
 
+~~~
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| amon               |
+| hue                |
+| metastore          |
+| mysql              |
+| nav                |
+| navms              |
+| oozie              |
+| performance_schema |
+| rman               |
+| scm                |
+| sentry             |
++--------------------+
+~~~
+
+### Preparing the Cloudera Manager Server Database
+~~~
+[sunmin@localhost ~]$ sudo /usr/share/cmf/schema/scm_prepare_database.sh mysql scm scm
+Enter SCM password: 
+JAVA_HOME=/usr/lib/jvm/jre-openjdk
+Verifying that we can write to /etc/cloudera-scm-server
+Creating SCM configuration file in /etc/cloudera-scm-server
+Executing:  /usr/lib/jvm/jre-openjdk/bin/java -cp /usr/share/java/mysql-connector-java.jar:/usr/share/java/oracle-connector-java.jar:/usr/share/java/postgresql-connector-java.jar:/usr/share/cmf/schema/../lib/* com.cloudera.enterprise.dbutil.DbCommandExecutor /etc/cloudera-scm-server/db.properties com.cloudera.cmf.db.
+[                          main] DbCommandExecutor              INFO  Successfully connected to database.
+All done, your SCM database is configured correctly!
+
+# If it exists, remove the embedded PostgreSQL properties file:
+sudo rm /etc/cloudera-scm-server/db.mgmt.properties
+~~~
+
+### Start Cloudera Manager Server
+~~~
+[sunmin@localhost ~]$ sudo systemctl start cloudera-scm-server
+
+web : http://localhost:7180 접속
+~~~
+
+### cloudera 화면 확인
+![ex_screenshot](./img/web.png)
 
 
-
+---
 
 ### Update parameter
 https://aws.amazon.com/ko/premiumsupport/knowledge-center/ec2-password-login/
