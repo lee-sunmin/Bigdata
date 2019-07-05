@@ -6,3 +6,19 @@ on a.type = b.type
 where a.status = 'Active'
 ;
 ~~~
+
+
+~~~
+create database problem2;
+
+use problem2;
+
+hive> create external table solution(id INT, fname STRING, lname STRING, address STRING, city STRING, state STRING,
+    > zip STRING, birthday STRING, hireday STRING)
+    > row format SERDE 'parquet.hive.serde.ParquetHiveSerDe'
+    > STORED AS 
+    >     INPUTFORMAT "parquet.hive.DeprecatedParquetInputFormat"
+    >     OUTPUTFORMAT "parquet.hive.DeprecatedParquetOutputFormat"
+    >     LOCATION '/user/training/problem2/data/employee';
+~~~
+
