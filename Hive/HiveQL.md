@@ -1,3 +1,5 @@
+### 1
+
 *where status='Active' 가 2회 들어가는게 맞나?*  
 ~~~sql
 select a.id as id, a.type as type, a.status as status, a.amount as amount, a.amount-b.average as difference 
@@ -7,6 +9,7 @@ where a.status = 'Active'
 ;
 ~~~
 
+### 2
 
 ~~~
 create database problem2;
@@ -21,4 +24,4 @@ hive> create external table solution(id INT, fname STRING, lname STRING, address
     >     OUTPUTFORMAT "parquet.hive.DeprecatedParquetOutputFormat"
     >     LOCATION '/user/training/problem2/data/employee';
 ~~~
-
+![2](https://user-images.githubusercontent.com/17976251/60730159-6f640680-9f7f-11e9-877e-9c6eb5179044.jpg)
