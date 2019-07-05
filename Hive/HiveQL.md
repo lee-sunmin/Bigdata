@@ -25,3 +25,16 @@ hive> create external table solution(id INT, fname STRING, lname STRING, address
     >     LOCATION '/user/training/problem2/data/employee';
 ~~~
 ![2](https://user-images.githubusercontent.com/17976251/60730159-6f640680-9f7f-11e9-877e-9c6eb5179044.jpg)
+
+
+### 3
+~~~ 
+create external table solution(id string, fname string, lname string, hphone string);
+
+
+select b.id as id , b.fname as fname, b.lname as lname, regexp_replace(b.hphone,'[ )(-]','') as hphone
+from account a join customer b
+on a.custid=b.id
+where a.amount < 0
+;
+~~~
