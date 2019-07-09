@@ -164,6 +164,14 @@ order 먼저 하고 limit 쓰면 오름차순/내림차순 상위 몇개 추출 
 : 하둡 기반의 데이터 웨어하우징 프레임워크
 대량의 데이터를 관리하고 학습하기 위하여 개발되었음
 
+작성된 SQL 쿼리는 일련의 Map-Reduce Job으로 변환되어 하둡 클러스터에서 구동된다.
+
+하이브는 HDFS에 저장된 데이터(디렉터리/파일)에 구조(스키마)를 입히는 방식으로 데이터를 테이블로 구조화 시킨다.
+
+테이블 스키마와 같은 메타데이터는 메타스토어라 불리는 데이터베이스에 저장하고,
+Data는 HDFS 에 저장한다.
+
+
 facebook
 dbms는 아니지만, standard SQL과 유사
 
@@ -204,6 +212,11 @@ sql 처럼 쓸 수 있으나, 똑같진 않다
 
 #### Impala
 
+Impala와 Hive는 Hive Metastore를 공유한다.  
+impala는 metadata를 캐시해서 관리하기 때문에 빠른 성능을 보여주지만,  
+Hive에 의해서 메타데이터가 변경되었을 때  
+해당 캐시를 refresh 해주는 invalidate metadata 명령이나 refresh 명령어를 사용해서 캐시를 갱신해주어야 한다.
+
 SQL 처럼 똑같이 쓸 수 있는 랭귀지 가지고 사용
 mapreduce로 바꾸지 않고 바로 수행 **** Impala demon
 hive에 비해 10-50배 이상 빠르다
@@ -223,6 +236,7 @@ hadoop cluster에서 돌릴 수 있음 : hdfs나 hbase table 접근 가능
 
 
 #### Oozie
+* 참고 사이트 : https://socurites.tistory.com/206
 workflow!
 
 control Flow Nodes
