@@ -143,9 +143,73 @@ sqoop export \
 
 ### 9
 
+~~~
+# concat 사용하니까 id의 type이 자동으로 string이 되었음.
+create table solution as
+select concat('A',id) id, fname, lname, address, city, state, zip, birthday from customer
+;
+
+select * from solution limit 5;
+~~~
 
 
+* data  
+<img width="1051" alt="data" src="https://user-images.githubusercontent.com/17976251/61292052-2deb1b00-a80b-11e9-9092-c9ab78382a2d.png">
 
+* result  
+<img width="1065" alt="result" src="https://user-images.githubusercontent.com/17976251/61292058-304d7500-a80b-11e9-9f04-0410db8cdb39.png">
+
+
+### 10
+
+~~~
+create view solution as
+select c.id id, c.fname fname, c.lname lname, c.city city, c.state state, b.charge charge, substr(b.tstamp,0,10) billdata
+from billing b, customer c
+where b.id = c.id
+;
+~~~  
+
+* result  
+<img width="1049" alt="result" src="https://user-images.githubusercontent.com/17976251/61293226-2d07b880-a80e-11e9-8486-3f102f75f4d3.png">
+
+### 11
+a.
+~~~
+select o.prod_id, count(*) cnt from order_details o, products p
+where o.prod_id = p.prod_id
+and p.brand = 'Dualcore'
+group by o.prod_id
+order by cnt desc
+limit 3;
+~~~
+* result  
+<img width="1053" alt="result" src="https://user-images.githubusercontent.com/17976251/61295354-d8b30780-a812-11e9-8438-1c8c85d6342b.png">
+
+
+b.
+~~~
+select to_date(o.order_date) date, sum(p.price) revenue, sum(p.price-p.cost) profit
+from orders o, order_details d, products p
+where o.order_id = d.order_id
+and d.prod_id = p.prod_id
+and p.brand = 'Dualcore'
+group by to_date(o.order_date);
+~~~
+
+
+c.
+~~~
+select o.order_id order_id, sum(p.price) revenue
+from orders o, order_details d, products p
+where o.order_id = d.order_id
+and d.prod_id = p.prod_id
+group by o.order_id
+order by revenue desc
+limit 10;
+~~~
+* result  
+<img width="872" alt="c_result" src="https://user-images.githubusercontent.com/17976251/61302735-40704f00-a821-11e9-8bd2-eb84b681dd32.png">
 
 
 
