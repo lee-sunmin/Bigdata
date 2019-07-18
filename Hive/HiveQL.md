@@ -42,6 +42,40 @@ where a.amount < 0
 
 ### 4
 
+~~~
+create external table employee1 
+( 
+cust_id int, 
+lname string, 
+fname string, 
+address string, 
+city string, 
+state string, 
+zip_cd string 
+) 
+row format delimited 
+fields terminated by '\t' 
+location '/user/training/problem4/data/employee1/.' 
+~~~
+
+~~~
+create external table employee1 
+( 
+cust_id int, 
+lname string, 
+fname string, 
+address string, 
+city string, 
+state string, 
+zip_cd string 
+) 
+row format delimited 
+fields terminated by '\t' 
+location '/user/training/problem4/data/employee1/.' 
+
+
+~~~
+
 * employee1
 
 10000000	Olga	Booker	Ap #643-2741 Proin Street	Gresham	OR	42593-0000
@@ -60,10 +94,30 @@ where a.amount < 0
 10010004,832,BALLARD,WYNNE,748-4292 Vel Road,Hillsboro,OR,53903
 10010005,536,GLASS,ZOE,Ap #565-7061 Massa. Rd.,Bear,DE,83658
 
+~~~
+create table solution as
+select res.cust_id, res.fname, res.lname, res.address, res.city, res.state, res.zip_cd
+from
+(
+select cust_id, fname, lname, address, city, state, substr(zip_cd,0,5) zip_cd
+from employee1
+where state = 'CA'
 
-spark 사용
-* 문제 ! pyspark가 실행이 안된다.
+union all
 
+select cust_id, initcap(fname) fname, initcap(lname) lname, address, city, state, zip_cd
+from employee2
+where state = 'CA'
+) res
+;
+
+~~~
+
+~~~
+insert OVERWRITE DIRECTORY '/user/training/problem4/solution/'
+SELECT * FROM solution
+;
+~~~
 
 ### 5
 
